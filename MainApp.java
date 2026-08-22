@@ -27,7 +27,6 @@ public class MainApp extends JFrame {
     private JPanel sidebar;
     private boolean isSidebarVisible = true;
 
-    // Dark Coffee Theme Color Palette
     private final Color COLOR_BG = new Color(15, 12, 10);
     private final Color COLOR_SIDEBAR = new Color(24, 18, 15);
     private final Color COLOR_CARD_BG = new Color(34, 26, 22);
@@ -56,34 +55,39 @@ public class MainApp extends JFrame {
         sidebar.setBackground(COLOR_SIDEBAR);
         sidebar.setLayout(new BorderLayout());
 
-        JPanel brandPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 24, 28));
+        JPanel brandPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 24, 24));
         brandPanel.setOpaque(false);
 
         JLabel lblBrandIcon = new JLabel(createVectorIcon("cap", 22, COLOR_ACCENT));
         JLabel lblBrand = new JLabel("SMS Admin");
-        lblBrand.setFont(new Font("Segoe UI", Font.BOLD, 22));
+        lblBrand.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 22));
         lblBrand.setForeground(COLOR_TEXT_PRIMARY);
 
         brandPanel.add(lblBrandIcon);
         brandPanel.add(lblBrand);
         sidebar.add(brandPanel, BorderLayout.NORTH);
 
-        JPanel menuPanel = new JPanel(new GridLayout(8, 1, 0, 8));
+        // Sidebar Menu - 8 Buttons Grid
+        JPanel menuPanel = new JPanel(new GridLayout(8, 1, 0, 6));
         menuPanel.setOpaque(false);
-        menuPanel.setBorder(new EmptyBorder(10, 16, 0, 16));
+        menuPanel.setBorder(new EmptyBorder(6, 16, 0, 16));
 
         JButton btnNavDash = createCustomNavButton("Dashboard", "dash", true);
         JButton btnNavCourses = createCustomNavButton("Courses", "book", false);
         JButton btnNavStudents = createCustomNavButton("Students", "users", false);
-        JButton btnNavEnroll = createCustomNavButton("Enroll to Course", "enroll", false);
-        JButton btnNavRefresh = createCustomNavButton("Refresh Data", "refresh", false);
+        JButton btnNavEnroll = createCustomNavButton("Enrollments", "enroll", false);
+        JButton btnNavPayment = createCustomNavButton("Fee Payments", "pay", false);
+        JButton btnNavTeachers = createCustomNavButton("Faculty", "user", false);
+        JButton btnNavReports = createCustomNavButton("Student Report", "report", false);
         JButton btnLogout = createCustomNavButton("Logout", "logout", false);
 
         menuPanel.add(btnNavDash);
         menuPanel.add(btnNavCourses);
         menuPanel.add(btnNavStudents);
         menuPanel.add(btnNavEnroll);
-        menuPanel.add(btnNavRefresh);
+        menuPanel.add(btnNavPayment);
+        menuPanel.add(btnNavTeachers);
+        menuPanel.add(btnNavReports);
         menuPanel.add(btnLogout);
         sidebar.add(menuPanel, BorderLayout.CENTER);
 
@@ -122,7 +126,7 @@ public class MainApp extends JFrame {
         searchBox.setOpaque(false);
         JTextField txtSearch = new JTextField(20);
         txtSearch.setPreferredSize(new Dimension(260, 36));
-        txtSearch.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+        txtSearch.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 13));
         txtSearch.setForeground(COLOR_TEXT_PRIMARY);
         txtSearch.setBackground(COLOR_CARD_BG);
         txtSearch.setCaretColor(COLOR_ACCENT);
@@ -130,7 +134,6 @@ public class MainApp extends JFrame {
                 BorderFactory.createLineBorder(COLOR_CARD_BORDER, 1),
                 new EmptyBorder(4, 12, 4, 12)
         ));
-        txtSearch.putClientProperty("JTextField.placeholderText", "Live Search Enrollment...");
         
         txtSearch.getDocument().addDocumentListener(new DocumentListener() {
             public void insertUpdate(DocumentEvent e) { filter(); }
@@ -154,7 +157,7 @@ public class MainApp extends JFrame {
         navRight.setOpaque(false);
         JLabel lblUserIcon = new JLabel(createVectorIcon("user", 16, COLOR_ACCENT));
         JLabel lblUser = new JLabel(currentUser);
-        lblUser.setFont(new Font("Segoe UI Semibold", Font.BOLD, 14));
+        lblUser.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 14));
         lblUser.setForeground(COLOR_TEXT_PRIMARY);
         navRight.add(lblUserIcon);
         navRight.add(lblUser);
@@ -168,14 +171,14 @@ public class MainApp extends JFrame {
         contentBody.setBorder(new EmptyBorder(26, 34, 26, 34));
 
         JLabel lblDashboard = new JLabel("System Overview");
-        lblDashboard.setFont(new Font("Segoe UI", Font.BOLD, 26));
+        lblDashboard.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 26));
         lblDashboard.setForeground(COLOR_TEXT_PRIMARY);
         contentBody.add(lblDashboard, BorderLayout.NORTH);
 
         JPanel centerSection = new JPanel(new BorderLayout(0, 24));
         centerSection.setOpaque(false);
 
-        // Cards with Box Shadows
+        // Metric Cards Grid
         JPanel cardsGrid = new JPanel(new GridLayout(1, 4, 22, 0));
         cardsGrid.setOpaque(false);
         cardsGrid.setPreferredSize(new Dimension(0, 145));
@@ -192,16 +195,14 @@ public class MainApp extends JFrame {
 
         centerSection.add(cardsGrid, BorderLayout.NORTH);
 
-        // Table with Dark Card & Box Shadow
+        // Table Card
         JPanel tableContainer = new JPanel(new BorderLayout(0, 16)) {
             @Override
             protected void paintComponent(Graphics g) {
                 Graphics2D g2 = (Graphics2D) g.create();
                 g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-                // Soft Box Shadow
                 g2.setColor(new Color(0, 0, 0, 90));
                 g2.fillRoundRect(4, 6, getWidth() - 8, getHeight() - 8, 20, 20);
-                // Dark Coffee Card
                 g2.setColor(COLOR_CARD_BG);
                 g2.fillRoundRect(0, 0, getWidth() - 4, getHeight() - 4, 18, 18);
                 g2.setColor(COLOR_CARD_BORDER);
@@ -217,7 +218,7 @@ public class MainApp extends JFrame {
         tableTitlePanel.setOpaque(false);
         JLabel lblCalIcon = new JLabel(createVectorIcon("calendar", 16, COLOR_ACCENT));
         JLabel lblTableTitle = new JLabel("Recent Student Registrations");
-        lblTableTitle.setFont(new Font("Segoe UI", Font.BOLD, 16));
+        lblTableTitle.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 16));
         lblTableTitle.setForeground(COLOR_TEXT_PRIMARY);
         tableTitlePanel.add(lblCalIcon);
         tableTitlePanel.add(lblTableTitle);
@@ -235,7 +236,7 @@ public class MainApp extends JFrame {
         table.setRowSorter(rowSorter);
 
         table.setRowHeight(46);
-        table.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+        table.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 13));
         table.setBackground(COLOR_CARD_BG);
         table.setForeground(COLOR_TEXT_PRIMARY);
         table.setGridColor(COLOR_CARD_BORDER);
@@ -243,7 +244,7 @@ public class MainApp extends JFrame {
         table.setSelectionBackground(new Color(67, 50, 42));
         table.setSelectionForeground(COLOR_TEXT_PRIMARY);
 
-        table.getTableHeader().setFont(new Font("Segoe UI Semibold", Font.BOLD, 12));
+        table.getTableHeader().setFont(new Font(Font.SANS_SERIF, Font.BOLD, 12));
         table.getTableHeader().setBackground(COLOR_SIDEBAR);
         table.getTableHeader().setForeground(COLOR_TEXT_MUTED);
         table.getTableHeader().setPreferredSize(new Dimension(0, 40));
@@ -270,14 +271,13 @@ public class MainApp extends JFrame {
         mainArea.add(contentBody, BorderLayout.CENTER);
         add(mainArea, BorderLayout.CENTER);
 
-        // Sidebar Navigation
+        // Button Actions
         btnNavStudents.addActionListener(e -> { new StudentForm().setVisible(true); loadDashboardData(); });
         btnNavCourses.addActionListener(e -> { new CourseForm().setVisible(true); loadDashboardData(); });
         btnNavEnroll.addActionListener(e -> { new EnrollmentForm().setVisible(true); loadDashboardData(); });
-        btnNavRefresh.addActionListener(e -> {
-            loadDashboardData();
-            JOptionPane.showMessageDialog(this, "Dashboard Synchronized!");
-        });
+        btnNavPayment.addActionListener(e -> new PaymentForm().setVisible(true));
+        btnNavTeachers.addActionListener(e -> new TeacherForm().setVisible(true));
+        btnNavReports.addActionListener(e -> new StudentReportForm().setVisible(true));
         btnLogout.addActionListener(e -> { dispose(); new LoginForm().setVisible(true); });
 
         loadDashboardData();
@@ -296,10 +296,8 @@ public class MainApp extends JFrame {
             protected void paintComponent(Graphics g) {
                 Graphics2D g2 = (Graphics2D) g.create();
                 g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-                // Box Shadow
                 g2.setColor(new Color(0, 0, 0, 80));
                 g2.fillRoundRect(3, hoverOffset + 6, getWidth() - 6, getHeight() - 8, 18, 18);
-                // Coffee Surface
                 g2.setColor(bgColor);
                 g2.fillRoundRect(0, hoverOffset, getWidth() - 3, getHeight() - 4, 18, 18);
                 g2.setColor(COLOR_CARD_BORDER);
@@ -316,10 +314,10 @@ public class MainApp extends JFrame {
         textPanel.setOpaque(false);
 
         JLabel lbl = new JLabel(title);
-        lbl.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 13));
+        lbl.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 13));
         lbl.setForeground(COLOR_TEXT_MUTED);
 
-        valueLabel.setFont(new Font("Segoe UI", Font.BOLD, 28));
+        valueLabel.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 28));
         valueLabel.setForeground(COLOR_TEXT_PRIMARY);
 
         textPanel.add(lbl);
@@ -422,13 +420,13 @@ public class MainApp extends JFrame {
         };
         btn.setIcon(createVectorIcon(iconType, 16, active ? Color.WHITE : COLOR_TEXT_MUTED));
         btn.setIconTextGap(14);
-        btn.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 13));
+        btn.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 13));
         btn.setForeground(active ? Color.WHITE : COLOR_TEXT_MUTED);
         btn.setFocusPainted(false);
         btn.setContentAreaFilled(false);
         btn.setBorderPainted(false);
         btn.setHorizontalAlignment(SwingConstants.LEFT);
-        btn.setBorder(new EmptyBorder(12, 16, 12, 16));
+        btn.setBorder(new EmptyBorder(10, 16, 10, 16));
         btn.setCursor(new Cursor(Cursor.HAND_CURSOR));
         return btn;
     }
@@ -468,9 +466,15 @@ public class MainApp extends JFrame {
                         g2.drawLine(x + 5, y + 5, x + size - 5, y + 5);
                         g2.drawLine(x + 5, y + 9, x + size - 8, y + 9);
                         break;
-                    case "refresh":
-                        g2.drawArc(x + 1, y + 1, size - 2, size - 2, 45, 270);
-                        g2.drawLine(x + size - 2, y + 2, x + size - 5, y + 6);
+                    case "pay":
+                        g2.drawRoundRect(x + 1, y + 3, size - 2, size - 6, 2, 2);
+                        g2.drawLine(x + 1, y + 6, x + size - 1, y + 6);
+                        break;
+                    case "report":
+                        g2.drawRoundRect(x + 2, y + 1, size - 4, size - 2, 2, 2);
+                        g2.drawLine(x + 4, y + 4, x + size - 4, y + 4);
+                        g2.drawLine(x + 4, y + 8, x + size - 4, y + 8);
+                        g2.drawLine(x + 4, y + 12, x + size - 8, y + 12);
                         break;
                     case "logout":
                         g2.drawArc(x + 1, y + 1, size - 2, size - 2, 90, 270);
