@@ -20,9 +20,16 @@ public class EnrollmentForm extends JFrame {
     private JTable table;
     private DefaultTableModel tableModel;
     
-    // Student & Course IDs mapping
     private List<Integer> studentIds = new ArrayList<>();
     private List<Integer> courseIds = new ArrayList<>();
+
+    // Dark Coffee Theme Color Palette
+    private final Color COLOR_BG = new Color(15, 12, 10);
+    private final Color COLOR_CARD_BG = new Color(34, 26, 22);
+    private final Color COLOR_CARD_BORDER = new Color(55, 43, 37);
+    private final Color COLOR_TEXT_PRIMARY = new Color(245, 240, 235);
+    private final Color COLOR_TEXT_MUTED = new Color(168, 153, 142);
+    private final Color COLOR_ACCENT = new Color(217, 119, 6);
 
     public EnrollmentForm() {
         setTitle("Enrollment Management Portal");
@@ -33,7 +40,7 @@ public class EnrollmentForm extends JFrame {
         setLayout(new BorderLayout());
 
         JPanel mainPanel = new JPanel(new BorderLayout(0, 20));
-        mainPanel.setBackground(new Color(243, 244, 247));
+        mainPanel.setBackground(COLOR_BG);
         mainPanel.setBorder(new EmptyBorder(22, 26, 22, 26));
 
         // Header Title
@@ -41,12 +48,12 @@ public class EnrollmentForm extends JFrame {
         headerPanel.setOpaque(false);
 
         JLabel lblTitle = new JLabel("Enrollment Management");
-        lblTitle.setFont(new Font("Segoe UI", Font.BOLD, 22));
-        lblTitle.setForeground(new Color(17, 24, 39));
+        lblTitle.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 22));
+        lblTitle.setForeground(COLOR_TEXT_PRIMARY);
 
         JLabel lblSub = new JLabel("Assign students to academic courses and record enrollments");
-        lblSub.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-        lblSub.setForeground(new Color(107, 114, 128));
+        lblSub.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 12));
+        lblSub.setForeground(COLOR_TEXT_MUTED);
 
         headerPanel.add(lblTitle);
         headerPanel.add(lblSub);
@@ -62,9 +69,9 @@ public class EnrollmentForm extends JFrame {
             protected void paintComponent(Graphics g) {
                 Graphics2D g2 = (Graphics2D) g.create();
                 g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-                g2.setColor(Color.WHITE);
+                g2.setColor(COLOR_CARD_BG);
                 g2.fill(new RoundRectangle2D.Double(0, 0, getWidth(), getHeight(), 16, 16));
-                g2.setColor(new Color(229, 231, 235));
+                g2.setColor(COLOR_CARD_BORDER);
                 g2.draw(new RoundRectangle2D.Double(0, 0, getWidth() - 1, getHeight() - 1, 16, 16));
                 g2.dispose();
                 super.paintComponent(g);
@@ -80,36 +87,38 @@ public class EnrollmentForm extends JFrame {
         // Select Student
         gbc.gridx = 0; gbc.gridy = 0; gbc.weightx = 0.3;
         JLabel lblStudent = new JLabel("Select Student");
-        lblStudent.setFont(new Font("Segoe UI Semibold", Font.BOLD, 12));
-        lblStudent.setForeground(new Color(55, 65, 81));
+        lblStudent.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 12));
+        lblStudent.setForeground(COLOR_TEXT_MUTED);
         inputCard.add(lblStudent, gbc);
 
         gbc.gridx = 0; gbc.gridy = 1;
         cbStudents = new JComboBox<>();
-        cbStudents.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-        cbStudents.setBackground(Color.WHITE);
+        cbStudents.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 13));
+        cbStudents.setBackground(new Color(28, 22, 18));
+        cbStudents.setForeground(Color.WHITE);
         cbStudents.setPreferredSize(new Dimension(160, 38));
         inputCard.add(cbStudents, gbc);
 
         // Select Course
         gbc.gridx = 1; gbc.gridy = 0; gbc.weightx = 0.3;
         JLabel lblCourse = new JLabel("Select Course");
-        lblCourse.setFont(new Font("Segoe UI Semibold", Font.BOLD, 12));
-        lblCourse.setForeground(new Color(55, 65, 81));
+        lblCourse.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 12));
+        lblCourse.setForeground(COLOR_TEXT_MUTED);
         inputCard.add(lblCourse, gbc);
 
         gbc.gridx = 1; gbc.gridy = 1;
         cbCourses = new JComboBox<>();
-        cbCourses.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-        cbCourses.setBackground(Color.WHITE);
+        cbCourses.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 13));
+        cbCourses.setBackground(new Color(28, 22, 18));
+        cbCourses.setForeground(Color.WHITE);
         cbCourses.setPreferredSize(new Dimension(160, 38));
         inputCard.add(cbCourses, gbc);
 
-        // Date Picker (Fixed 4-digit Year Format)
+        // Date Picker
         gbc.gridx = 2; gbc.gridy = 0; gbc.weightx = 0.2;
         JLabel lblDate = new JLabel("Enroll Date");
-        lblDate.setFont(new Font("Segoe UI Semibold", Font.BOLD, 12));
-        lblDate.setForeground(new Color(55, 65, 81));
+        lblDate.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 12));
+        lblDate.setForeground(COLOR_TEXT_MUTED);
         inputCard.add(lblDate, gbc);
 
         gbc.gridx = 2; gbc.gridy = 1;
@@ -122,7 +131,7 @@ public class EnrollmentForm extends JFrame {
 
         // Enroll Button
         gbc.gridx = 3; gbc.gridy = 1; gbc.weightx = 0.2;
-        JButton btnEnroll = createModernButton("+ Enroll", new Color(0, 180, 216), new Color(0, 150, 186));
+        JButton btnEnroll = createModernButton("+ Enroll", COLOR_ACCENT, new Color(180, 95, 4));
         inputCard.add(btnEnroll, gbc);
 
         centerPanel.add(inputCard, BorderLayout.NORTH);
@@ -133,9 +142,9 @@ public class EnrollmentForm extends JFrame {
             protected void paintComponent(Graphics g) {
                 Graphics2D g2 = (Graphics2D) g.create();
                 g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-                g2.setColor(Color.WHITE);
+                g2.setColor(COLOR_CARD_BG);
                 g2.fill(new RoundRectangle2D.Double(0, 0, getWidth(), getHeight(), 16, 16));
-                g2.setColor(new Color(229, 231, 235));
+                g2.setColor(COLOR_CARD_BORDER);
                 g2.draw(new RoundRectangle2D.Double(0, 0, getWidth() - 1, getHeight() - 1, 16, 16));
                 g2.dispose();
                 super.paintComponent(g);
@@ -145,25 +154,24 @@ public class EnrollmentForm extends JFrame {
         tableCard.setBorder(new EmptyBorder(16, 18, 16, 18));
 
         JLabel lblTableHeading = new JLabel("Active Student Enrollments");
-        lblTableHeading.setFont(new Font("Segoe UI", Font.BOLD, 14));
-        lblTableHeading.setForeground(new Color(31, 41, 55));
+        lblTableHeading.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 14));
+        lblTableHeading.setForeground(COLOR_TEXT_PRIMARY);
         tableCard.add(lblTableHeading, BorderLayout.NORTH);
 
         tableModel = new DefaultTableModel(new String[]{"ENROLL ID", "STUDENT NAME", "COURSE NAME", "DATE ENROLLED"}, 0);
         table = new JTable(tableModel);
-        table.setRowHeight(40);
-        table.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-        table.setForeground(new Color(55, 65, 81));
-        table.setGridColor(new Color(243, 244, 246));
+        table.setRowHeight(38);
+        table.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 13));
+        table.setBackground(COLOR_CARD_BG);
+        table.setForeground(COLOR_TEXT_PRIMARY);
+        table.setGridColor(COLOR_CARD_BORDER);
         table.setShowVerticalLines(false);
-        table.setSelectionBackground(new Color(237, 242, 255));
-        table.setSelectionForeground(new Color(17, 24, 39));
 
-        table.getTableHeader().setFont(new Font("Segoe UI Semibold", Font.BOLD, 12));
-        table.getTableHeader().setBackground(Color.WHITE);
-        table.getTableHeader().setForeground(new Color(107, 114, 128));
+        table.getTableHeader().setFont(new Font(Font.SANS_SERIF, Font.BOLD, 12));
+        table.getTableHeader().setBackground(new Color(24, 18, 15));
+        table.getTableHeader().setForeground(COLOR_TEXT_MUTED);
         table.getTableHeader().setPreferredSize(new Dimension(0, 36));
-        table.getTableHeader().setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, new Color(229, 231, 235)));
+        table.getTableHeader().setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, COLOR_CARD_BORDER));
 
         DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
         centerRenderer.setHorizontalAlignment(JLabel.CENTER);
@@ -173,7 +181,7 @@ public class EnrollmentForm extends JFrame {
 
         JScrollPane scroll = new JScrollPane(table);
         scroll.setBorder(BorderFactory.createEmptyBorder());
-        scroll.getViewport().setBackground(Color.WHITE);
+        scroll.getViewport().setBackground(COLOR_CARD_BG);
         tableCard.add(scroll, BorderLayout.CENTER);
 
         centerPanel.add(tableCard, BorderLayout.CENTER);
@@ -200,7 +208,7 @@ public class EnrollmentForm extends JFrame {
             }
         };
         btn.setPreferredSize(new Dimension(120, 38));
-        btn.setFont(new Font("Segoe UI Semibold", Font.BOLD, 13));
+        btn.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 13));
         btn.setForeground(Color.WHITE);
         btn.setContentAreaFilled(false);
         btn.setBorderPainted(false);
