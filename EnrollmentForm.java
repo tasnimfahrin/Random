@@ -23,13 +23,13 @@ public class EnrollmentForm extends JFrame {
     private List<Integer> studentIds = new ArrayList<>();
     private List<Integer> courseIds = new ArrayList<>();
 
-    // Dark Coffee Theme Color Palette
-    private final Color COLOR_BG = new Color(15, 12, 10);
-    private final Color COLOR_CARD_BG = new Color(34, 26, 22);
-    private final Color COLOR_CARD_BORDER = new Color(55, 43, 37);
-    private final Color COLOR_TEXT_PRIMARY = new Color(245, 240, 235);
-    private final Color COLOR_TEXT_MUTED = new Color(168, 153, 142);
-    private final Color COLOR_ACCENT = new Color(217, 119, 6);
+    // Dark Coffee & Cream Palette
+    private final Color COLOR_BG = new Color(20, 14, 11);
+    private final Color COLOR_GLASS_BG = new Color(45, 32, 25, 220);
+    private final Color COLOR_GLASS_BORDER = new Color(240, 225, 210, 45);
+    private final Color COLOR_TEXT_CREAM = new Color(248, 241, 233);
+    private final Color COLOR_TEXT_MUTED = new Color(201, 182, 166);
+    private final Color COLOR_ACCENT = new Color(224, 138, 38);
 
     public EnrollmentForm() {
         setTitle("Enrollment Management Portal");
@@ -43,13 +43,12 @@ public class EnrollmentForm extends JFrame {
         mainPanel.setBackground(COLOR_BG);
         mainPanel.setBorder(new EmptyBorder(22, 26, 22, 26));
 
-        // Header Title
         JPanel headerPanel = new JPanel(new GridLayout(2, 1, 0, 2));
         headerPanel.setOpaque(false);
 
         JLabel lblTitle = new JLabel("Enrollment Management");
         lblTitle.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 22));
-        lblTitle.setForeground(COLOR_TEXT_PRIMARY);
+        lblTitle.setForeground(COLOR_TEXT_CREAM);
 
         JLabel lblSub = new JLabel("Assign students to academic courses and record enrollments");
         lblSub.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 12));
@@ -59,19 +58,17 @@ public class EnrollmentForm extends JFrame {
         headerPanel.add(lblSub);
         mainPanel.add(headerPanel, BorderLayout.NORTH);
 
-        // Center Content
         JPanel centerPanel = new JPanel(new BorderLayout(0, 18));
         centerPanel.setOpaque(false);
 
-        // 1. Input Form Card
         JPanel inputCard = new JPanel(new GridBagLayout()) {
             @Override
             protected void paintComponent(Graphics g) {
                 Graphics2D g2 = (Graphics2D) g.create();
                 g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-                g2.setColor(COLOR_CARD_BG);
+                g2.setColor(COLOR_GLASS_BG);
                 g2.fill(new RoundRectangle2D.Double(0, 0, getWidth(), getHeight(), 16, 16));
-                g2.setColor(COLOR_CARD_BORDER);
+                g2.setColor(COLOR_GLASS_BORDER);
                 g2.draw(new RoundRectangle2D.Double(0, 0, getWidth() - 1, getHeight() - 1, 16, 16));
                 g2.dispose();
                 super.paintComponent(g);
@@ -94,8 +91,8 @@ public class EnrollmentForm extends JFrame {
         gbc.gridx = 0; gbc.gridy = 1;
         cbStudents = new JComboBox<>();
         cbStudents.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 13));
-        cbStudents.setBackground(new Color(28, 22, 18));
-        cbStudents.setForeground(Color.WHITE);
+        cbStudents.setBackground(new Color(55, 39, 31));
+        cbStudents.setForeground(COLOR_TEXT_CREAM);
         cbStudents.setPreferredSize(new Dimension(160, 38));
         inputCard.add(cbStudents, gbc);
 
@@ -109,8 +106,8 @@ public class EnrollmentForm extends JFrame {
         gbc.gridx = 1; gbc.gridy = 1;
         cbCourses = new JComboBox<>();
         cbCourses.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 13));
-        cbCourses.setBackground(new Color(28, 22, 18));
-        cbCourses.setForeground(Color.WHITE);
+        cbCourses.setBackground(new Color(55, 39, 31));
+        cbCourses.setForeground(COLOR_TEXT_CREAM);
         cbCourses.setPreferredSize(new Dimension(160, 38));
         inputCard.add(cbCourses, gbc);
 
@@ -131,20 +128,19 @@ public class EnrollmentForm extends JFrame {
 
         // Enroll Button
         gbc.gridx = 3; gbc.gridy = 1; gbc.weightx = 0.2;
-        JButton btnEnroll = createModernButton("+ Enroll", COLOR_ACCENT, new Color(180, 95, 4));
+        JButton btnEnroll = createModernButton("+ Enroll", COLOR_ACCENT, new Color(195, 115, 25));
         inputCard.add(btnEnroll, gbc);
 
         centerPanel.add(inputCard, BorderLayout.NORTH);
 
-        // 2. Table Card
         JPanel tableCard = new JPanel(new BorderLayout(0, 12)) {
             @Override
             protected void paintComponent(Graphics g) {
                 Graphics2D g2 = (Graphics2D) g.create();
                 g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-                g2.setColor(COLOR_CARD_BG);
+                g2.setColor(COLOR_GLASS_BG);
                 g2.fill(new RoundRectangle2D.Double(0, 0, getWidth(), getHeight(), 16, 16));
-                g2.setColor(COLOR_CARD_BORDER);
+                g2.setColor(COLOR_GLASS_BORDER);
                 g2.draw(new RoundRectangle2D.Double(0, 0, getWidth() - 1, getHeight() - 1, 16, 16));
                 g2.dispose();
                 super.paintComponent(g);
@@ -155,23 +151,23 @@ public class EnrollmentForm extends JFrame {
 
         JLabel lblTableHeading = new JLabel("Active Student Enrollments");
         lblTableHeading.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 14));
-        lblTableHeading.setForeground(COLOR_TEXT_PRIMARY);
+        lblTableHeading.setForeground(COLOR_TEXT_CREAM);
         tableCard.add(lblTableHeading, BorderLayout.NORTH);
 
         tableModel = new DefaultTableModel(new String[]{"ENROLL ID", "STUDENT NAME", "COURSE NAME", "DATE ENROLLED"}, 0);
         table = new JTable(tableModel);
         table.setRowHeight(38);
         table.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 13));
-        table.setBackground(COLOR_CARD_BG);
-        table.setForeground(COLOR_TEXT_PRIMARY);
-        table.setGridColor(COLOR_CARD_BORDER);
+        table.setBackground(new Color(45, 32, 25));
+        table.setForeground(COLOR_TEXT_CREAM);
+        table.setGridColor(COLOR_GLASS_BORDER);
         table.setShowVerticalLines(false);
 
         table.getTableHeader().setFont(new Font(Font.SANS_SERIF, Font.BOLD, 12));
-        table.getTableHeader().setBackground(new Color(24, 18, 15));
+        table.getTableHeader().setBackground(new Color(28, 20, 15));
         table.getTableHeader().setForeground(COLOR_TEXT_MUTED);
         table.getTableHeader().setPreferredSize(new Dimension(0, 36));
-        table.getTableHeader().setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, COLOR_CARD_BORDER));
+        table.getTableHeader().setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, COLOR_GLASS_BORDER));
 
         DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
         centerRenderer.setHorizontalAlignment(JLabel.CENTER);
@@ -181,7 +177,7 @@ public class EnrollmentForm extends JFrame {
 
         JScrollPane scroll = new JScrollPane(table);
         scroll.setBorder(BorderFactory.createEmptyBorder());
-        scroll.getViewport().setBackground(COLOR_CARD_BG);
+        scroll.getViewport().setBackground(new Color(45, 32, 25));
         tableCard.add(scroll, BorderLayout.CENTER);
 
         centerPanel.add(tableCard, BorderLayout.CENTER);
@@ -237,9 +233,7 @@ public class EnrollmentForm extends JFrame {
                 courseIds.add(rs2.getInt("course_id"));
                 cbCourses.addItem(rs2.getString("course_name"));
             }
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
+        } catch (Exception ex) { ex.printStackTrace(); }
     }
 
     private void saveEnrollment() {
@@ -287,17 +281,13 @@ public class EnrollmentForm extends JFrame {
             ResultSet rs = st.executeQuery(sql);
             while (rs.next()) {
                 Date d = rs.getDate("enroll_date");
-                String formattedDate = (d != null) ? sdf.format(d) : "";
-
                 tableModel.addRow(new Object[]{
                     rs.getInt("enrollment_id"),
                     rs.getString("name"),
                     rs.getString("course_name"),
-                    formattedDate
+                    (d != null) ? sdf.format(d) : ""
                 });
             }
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
+        } catch (Exception ex) { ex.printStackTrace(); }
     }
 }

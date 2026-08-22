@@ -21,12 +21,13 @@ public class PaymentForm extends JFrame {
     private DefaultTableModel tableModel;
     private List<Integer> studentIds = new ArrayList<>();
 
-    private final Color COLOR_BG = new Color(15, 12, 10);
-    private final Color COLOR_CARD_BG = new Color(34, 26, 22);
-    private final Color COLOR_CARD_BORDER = new Color(55, 43, 37);
-    private final Color COLOR_TEXT_PRIMARY = new Color(245, 240, 235);
-    private final Color COLOR_TEXT_MUTED = new Color(168, 153, 142);
-    private final Color COLOR_ACCENT = new Color(217, 119, 6);
+    // Dark Coffee & Cream Palette
+    private final Color COLOR_BG = new Color(20, 14, 11);
+    private final Color COLOR_GLASS_BG = new Color(45, 32, 25, 220);
+    private final Color COLOR_GLASS_BORDER = new Color(240, 225, 210, 45);
+    private final Color COLOR_TEXT_CREAM = new Color(248, 241, 233);
+    private final Color COLOR_TEXT_MUTED = new Color(201, 182, 166);
+    private final Color COLOR_ACCENT = new Color(224, 138, 38);
 
     public PaymentForm() {
         setTitle("Fee & Payment Portal");
@@ -45,7 +46,7 @@ public class PaymentForm extends JFrame {
 
         JLabel lblTitle = new JLabel("Fee & Payment Portal");
         lblTitle.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 22));
-        lblTitle.setForeground(COLOR_TEXT_PRIMARY);
+        lblTitle.setForeground(COLOR_TEXT_CREAM);
 
         JLabel lblSub = new JLabel("Collect and record student tuition fees");
         lblSub.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 12));
@@ -63,9 +64,9 @@ public class PaymentForm extends JFrame {
             protected void paintComponent(Graphics g) {
                 Graphics2D g2 = (Graphics2D) g.create();
                 g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-                g2.setColor(COLOR_CARD_BG);
+                g2.setColor(COLOR_GLASS_BG);
                 g2.fill(new RoundRectangle2D.Double(0, 0, getWidth(), getHeight(), 16, 16));
-                g2.setColor(COLOR_CARD_BORDER);
+                g2.setColor(COLOR_GLASS_BORDER);
                 g2.draw(new RoundRectangle2D.Double(0, 0, getWidth() - 1, getHeight() - 1, 16, 16));
                 g2.dispose();
                 super.paintComponent(g);
@@ -88,12 +89,12 @@ public class PaymentForm extends JFrame {
         gbc.gridx = 0; gbc.gridy = 1;
         cbStudents = new JComboBox<>();
         cbStudents.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 13));
-        cbStudents.setBackground(new Color(28, 22, 18));
-        cbStudents.setForeground(Color.WHITE);
+        cbStudents.setBackground(new Color(55, 39, 31));
+        cbStudents.setForeground(COLOR_TEXT_CREAM);
         cbStudents.setPreferredSize(new Dimension(160, 38));
         inputCard.add(cbStudents, gbc);
 
-        // Amount
+        // Amount Label
         gbc.gridx = 1; gbc.gridy = 0; gbc.weightx = 0.25;
         JLabel lblAmount = new JLabel("Amount");
         lblAmount.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 12));
@@ -114,8 +115,8 @@ public class PaymentForm extends JFrame {
         gbc.gridx = 2; gbc.gridy = 1;
         cbMethod = new JComboBox<>(new String[]{"Cash", "bKash", "Card", "Bank"});
         cbMethod.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 13));
-        cbMethod.setBackground(new Color(28, 22, 18));
-        cbMethod.setForeground(Color.WHITE);
+        cbMethod.setBackground(new Color(55, 39, 31));
+        cbMethod.setForeground(COLOR_TEXT_CREAM);
         cbMethod.setPreferredSize(new Dimension(130, 38));
         inputCard.add(cbMethod, gbc);
 
@@ -134,20 +135,19 @@ public class PaymentForm extends JFrame {
 
         // Save Button
         gbc.gridx = 4; gbc.gridy = 1; gbc.weightx = 0.2;
-        JButton btnPay = createModernButton("+ Pay", COLOR_ACCENT, new Color(180, 95, 4));
+        JButton btnPay = createModernButton("+ Pay", COLOR_ACCENT, new Color(195, 115, 25));
         inputCard.add(btnPay, gbc);
 
         centerPanel.add(inputCard, BorderLayout.NORTH);
 
-        // Table
         JPanel tableCard = new JPanel(new BorderLayout(0, 12)) {
             @Override
             protected void paintComponent(Graphics g) {
                 Graphics2D g2 = (Graphics2D) g.create();
                 g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-                g2.setColor(COLOR_CARD_BG);
+                g2.setColor(COLOR_GLASS_BG);
                 g2.fill(new RoundRectangle2D.Double(0, 0, getWidth(), getHeight(), 16, 16));
-                g2.setColor(COLOR_CARD_BORDER);
+                g2.setColor(COLOR_GLASS_BORDER);
                 g2.draw(new RoundRectangle2D.Double(0, 0, getWidth() - 1, getHeight() - 1, 16, 16));
                 g2.dispose();
                 super.paintComponent(g);
@@ -158,22 +158,22 @@ public class PaymentForm extends JFrame {
 
         JLabel lblTableHeading = new JLabel("Payment Transaction Log");
         lblTableHeading.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 14));
-        lblTableHeading.setForeground(COLOR_TEXT_PRIMARY);
+        lblTableHeading.setForeground(COLOR_TEXT_CREAM);
         tableCard.add(lblTableHeading, BorderLayout.NORTH);
 
         tableModel = new DefaultTableModel(new String[]{"TRANSACTION ID", "STUDENT NAME", "PAID", "MODE", "PAY DATE"}, 0);
         table = new JTable(tableModel);
         table.setRowHeight(38);
         table.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 13));
-        table.setBackground(COLOR_CARD_BG);
-        table.setForeground(COLOR_TEXT_PRIMARY);
-        table.setGridColor(COLOR_CARD_BORDER);
+        table.setBackground(new Color(45, 32, 25));
+        table.setForeground(COLOR_TEXT_CREAM);
+        table.setGridColor(COLOR_GLASS_BORDER);
         table.setShowVerticalLines(false);
 
         table.getTableHeader().setFont(new Font(Font.SANS_SERIF, Font.BOLD, 12));
-        table.getTableHeader().setBackground(new Color(24, 18, 15));
+        table.getTableHeader().setBackground(new Color(28, 20, 15));
         table.getTableHeader().setForeground(COLOR_TEXT_MUTED);
-        table.getTableHeader().setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, COLOR_CARD_BORDER));
+        table.getTableHeader().setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, COLOR_GLASS_BORDER));
 
         DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
         centerRenderer.setHorizontalAlignment(JLabel.CENTER);
@@ -181,7 +181,7 @@ public class PaymentForm extends JFrame {
 
         JScrollPane scroll = new JScrollPane(table);
         scroll.setBorder(BorderFactory.createEmptyBorder());
-        scroll.getViewport().setBackground(COLOR_CARD_BG);
+        scroll.getViewport().setBackground(new Color(45, 32, 25));
         tableCard.add(scroll, BorderLayout.CENTER);
 
         centerPanel.add(tableCard, BorderLayout.CENTER);
@@ -198,10 +198,10 @@ public class PaymentForm extends JFrame {
         JTextField tf = new JTextField();
         tf.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 13));
         tf.setPreferredSize(new Dimension(100, 38));
-        tf.setBackground(new Color(28, 22, 18));
-        tf.setForeground(Color.WHITE);
+        tf.setBackground(new Color(55, 39, 31));
+        tf.setForeground(COLOR_TEXT_CREAM);
         tf.setCaretColor(COLOR_ACCENT);
-        tf.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(COLOR_CARD_BORDER, 1), new EmptyBorder(6, 12, 6, 12)));
+        tf.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(COLOR_GLASS_BORDER, 1), new EmptyBorder(6, 12, 6, 12)));
         return tf;
     }
 

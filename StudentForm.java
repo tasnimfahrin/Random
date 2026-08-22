@@ -11,17 +11,18 @@ import java.sql.ResultSet;
 public class StudentForm extends JFrame {
 
     private JTextField txtName;
-    private JRadioButton rbMale, rbFemale, rbOther;
+    private JRadioButton rbMale, rbFemale;
     private ButtonGroup bgGender;
     private JTable table;
     private DefaultTableModel tableModel;
 
-    private final Color COLOR_BG = new Color(15, 12, 10);
-    private final Color COLOR_CARD_BG = new Color(34, 26, 22);
-    private final Color COLOR_CARD_BORDER = new Color(55, 43, 37);
-    private final Color COLOR_TEXT_PRIMARY = new Color(245, 240, 235);
-    private final Color COLOR_TEXT_MUTED = new Color(168, 153, 142);
-    private final Color COLOR_ACCENT = new Color(217, 119, 6);
+    // Dark Coffee & Cream Palette
+    private final Color COLOR_BG = new Color(20, 14, 11);
+    private final Color COLOR_GLASS_BG = new Color(45, 32, 25, 220);
+    private final Color COLOR_GLASS_BORDER = new Color(240, 225, 210, 45);
+    private final Color COLOR_TEXT_CREAM = new Color(248, 241, 233);
+    private final Color COLOR_TEXT_MUTED = new Color(201, 182, 166);
+    private final Color COLOR_ACCENT = new Color(224, 138, 38);
 
     public StudentForm() {
         setTitle("Student Registration Portal");
@@ -40,7 +41,7 @@ public class StudentForm extends JFrame {
 
         JLabel lblTitle = new JLabel("Student Directory");
         lblTitle.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 22));
-        lblTitle.setForeground(COLOR_TEXT_PRIMARY);
+        lblTitle.setForeground(COLOR_TEXT_CREAM);
 
         JLabel lblSub = new JLabel("Register and track student profiles");
         lblSub.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 12));
@@ -58,9 +59,9 @@ public class StudentForm extends JFrame {
             protected void paintComponent(Graphics g) {
                 Graphics2D g2 = (Graphics2D) g.create();
                 g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-                g2.setColor(COLOR_CARD_BG);
+                g2.setColor(COLOR_GLASS_BG);
                 g2.fill(new RoundRectangle2D.Double(0, 0, getWidth(), getHeight(), 16, 16));
-                g2.setColor(COLOR_CARD_BORDER);
+                g2.setColor(COLOR_GLASS_BORDER);
                 g2.draw(new RoundRectangle2D.Double(0, 0, getWidth() - 1, getHeight() - 1, 16, 16));
                 g2.dispose();
                 super.paintComponent(g);
@@ -89,26 +90,24 @@ public class StudentForm extends JFrame {
         lblGender.setForeground(COLOR_TEXT_MUTED);
         inputCard.add(lblGender, gbc);
 
+        // Gender Selection (Custom Styled MALE & FEMALE only)
         gbc.gridx = 1; gbc.gridy = 1;
-        JPanel genderBox = new JPanel(new FlowLayout(FlowLayout.LEFT, 8, 4));
+        JPanel genderBox = new JPanel(new FlowLayout(FlowLayout.LEFT, 14, 4));
         genderBox.setOpaque(false);
-        rbMale = new JRadioButton("MALE", true);
-        rbFemale = new JRadioButton("FEMALE");
-        rbOther = new JRadioButton("OTHER");
-        for (JRadioButton rb : new JRadioButton[]{rbMale, rbFemale, rbOther}) {
-            rb.setOpaque(false);
-            rb.setForeground(COLOR_TEXT_PRIMARY);
-            rb.setFocusPainted(false);
-            genderBox.add(rb);
-        }
+
+        rbMale = createCustomRadioButton("MALE", true);
+        rbFemale = createCustomRadioButton("FEMALE", false);
+
         bgGender = new ButtonGroup();
         bgGender.add(rbMale);
         bgGender.add(rbFemale);
-        bgGender.add(rbOther);
+
+        genderBox.add(rbMale);
+        genderBox.add(rbFemale);
         inputCard.add(genderBox, gbc);
 
         gbc.gridx = 2; gbc.gridy = 1; gbc.weightx = 0.25;
-        JButton btnSave = createModernButton("+ Save Student", COLOR_ACCENT, new Color(180, 95, 4));
+        JButton btnSave = createModernButton("+ Save Student", COLOR_ACCENT, new Color(195, 115, 25));
         inputCard.add(btnSave, gbc);
 
         centerPanel.add(inputCard, BorderLayout.NORTH);
@@ -118,9 +117,9 @@ public class StudentForm extends JFrame {
             protected void paintComponent(Graphics g) {
                 Graphics2D g2 = (Graphics2D) g.create();
                 g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-                g2.setColor(COLOR_CARD_BG);
+                g2.setColor(COLOR_GLASS_BG);
                 g2.fill(new RoundRectangle2D.Double(0, 0, getWidth(), getHeight(), 16, 16));
-                g2.setColor(COLOR_CARD_BORDER);
+                g2.setColor(COLOR_GLASS_BORDER);
                 g2.draw(new RoundRectangle2D.Double(0, 0, getWidth() - 1, getHeight() - 1, 16, 16));
                 g2.dispose();
                 super.paintComponent(g);
@@ -133,15 +132,15 @@ public class StudentForm extends JFrame {
         table = new JTable(tableModel);
         table.setRowHeight(38);
         table.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 13));
-        table.setBackground(COLOR_CARD_BG);
-        table.setForeground(COLOR_TEXT_PRIMARY);
-        table.setGridColor(COLOR_CARD_BORDER);
+        table.setBackground(new Color(45, 32, 25));
+        table.setForeground(COLOR_TEXT_CREAM);
+        table.setGridColor(COLOR_GLASS_BORDER);
         table.setShowVerticalLines(false);
 
         table.getTableHeader().setFont(new Font(Font.SANS_SERIF, Font.BOLD, 12));
-        table.getTableHeader().setBackground(new Color(24, 18, 15));
+        table.getTableHeader().setBackground(new Color(28, 20, 15));
         table.getTableHeader().setForeground(COLOR_TEXT_MUTED);
-        table.getTableHeader().setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, COLOR_CARD_BORDER));
+        table.getTableHeader().setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, COLOR_GLASS_BORDER));
 
         DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
         centerRenderer.setHorizontalAlignment(JLabel.CENTER);
@@ -149,7 +148,7 @@ public class StudentForm extends JFrame {
 
         JScrollPane scroll = new JScrollPane(table);
         scroll.setBorder(BorderFactory.createEmptyBorder());
-        scroll.getViewport().setBackground(COLOR_CARD_BG);
+        scroll.getViewport().setBackground(new Color(45, 32, 25));
         tableCard.add(scroll, BorderLayout.CENTER);
 
         centerPanel.add(tableCard, BorderLayout.CENTER);
@@ -160,14 +159,57 @@ public class StudentForm extends JFrame {
         loadStudents();
     }
 
+    private JRadioButton createCustomRadioButton(String text, boolean selected) {
+        JRadioButton rb = new JRadioButton(text, selected);
+        rb.setOpaque(false);
+        rb.setForeground(COLOR_TEXT_CREAM);
+        rb.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 12));
+        rb.setFocusPainted(false);
+        rb.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        
+        // Custom Crisp Vector Icons for Radio Button
+        rb.setIcon(new Icon() {
+            public void paintIcon(Component c, Graphics g, int x, int y) {
+                Graphics2D g2 = (Graphics2D) g.create();
+                g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+                g2.setColor(new Color(55, 39, 31));
+                g2.fillOval(x, y + 2, 14, 14);
+                g2.setColor(COLOR_GLASS_BORDER);
+                g2.setStroke(new BasicStroke(1.2f));
+                g2.drawOval(x, y + 2, 14, 14);
+                g2.dispose();
+            }
+            public int getIconWidth() { return 18; }
+            public int getIconHeight() { return 18; }
+        });
+
+        rb.setSelectedIcon(new Icon() {
+            public void paintIcon(Component c, Graphics g, int x, int y) {
+                Graphics2D g2 = (Graphics2D) g.create();
+                g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+                g2.setColor(new Color(55, 39, 31));
+                g2.fillOval(x, y + 2, 14, 14);
+                g2.setColor(COLOR_ACCENT);
+                g2.setStroke(new BasicStroke(1.5f));
+                g2.drawOval(x, y + 2, 14, 14);
+                g2.fillOval(x + 4, y + 6, 6, 6);
+                g2.dispose();
+            }
+            public int getIconWidth() { return 18; }
+            public int getIconHeight() { return 18; }
+        });
+
+        return rb;
+    }
+
     private JTextField createStyledTextField() {
         JTextField tf = new JTextField();
         tf.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 13));
         tf.setPreferredSize(new Dimension(140, 38));
-        tf.setBackground(new Color(28, 22, 18));
-        tf.setForeground(Color.WHITE);
+        tf.setBackground(new Color(55, 39, 31));
+        tf.setForeground(COLOR_TEXT_CREAM);
         tf.setCaretColor(COLOR_ACCENT);
-        tf.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(COLOR_CARD_BORDER, 1), new EmptyBorder(6, 12, 6, 12)));
+        tf.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(COLOR_GLASS_BORDER, 1), new EmptyBorder(6, 12, 6, 12)));
         return tf;
     }
 
@@ -195,7 +237,7 @@ public class StudentForm extends JFrame {
 
     private void saveStudent() {
         String name = txtName.getText().trim();
-        Gender gender = rbMale.isSelected() ? Gender.MALE : (rbFemale.isSelected() ? Gender.FEMALE : Gender.OTHER);
+        Gender gender = rbMale.isSelected() ? Gender.MALE : Gender.FEMALE;
         if (name.isEmpty()) return;
 
         try (Connection con = DBConnection.getConnection()) {

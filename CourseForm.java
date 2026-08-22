@@ -14,12 +14,13 @@ public class CourseForm extends JFrame {
     private JTable table;
     private DefaultTableModel tableModel;
 
-    private final Color COLOR_BG = new Color(15, 12, 10);
-    private final Color COLOR_CARD_BG = new Color(34, 26, 22);
-    private final Color COLOR_CARD_BORDER = new Color(55, 43, 37);
-    private final Color COLOR_TEXT_PRIMARY = new Color(245, 240, 235);
-    private final Color COLOR_TEXT_MUTED = new Color(168, 153, 142);
-    private final Color COLOR_ACCENT = new Color(217, 119, 6);
+    // Dark Coffee & Cream Palette
+    private final Color COLOR_BG = new Color(20, 14, 11);
+    private final Color COLOR_GLASS_BG = new Color(45, 32, 25, 220);
+    private final Color COLOR_GLASS_BORDER = new Color(240, 225, 210, 45);
+    private final Color COLOR_TEXT_CREAM = new Color(248, 241, 233);
+    private final Color COLOR_TEXT_MUTED = new Color(201, 182, 166);
+    private final Color COLOR_ACCENT = new Color(224, 138, 38);
 
     public CourseForm() {
         setTitle("Course Management Portal");
@@ -38,7 +39,7 @@ public class CourseForm extends JFrame {
 
         JLabel lblTitle = new JLabel("Course Catalog");
         lblTitle.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 22));
-        lblTitle.setForeground(COLOR_TEXT_PRIMARY);
+        lblTitle.setForeground(COLOR_TEXT_CREAM);
 
         JLabel lblSub = new JLabel("Configure courses and tuition fees");
         lblSub.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 12));
@@ -56,9 +57,9 @@ public class CourseForm extends JFrame {
             protected void paintComponent(Graphics g) {
                 Graphics2D g2 = (Graphics2D) g.create();
                 g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-                g2.setColor(COLOR_CARD_BG);
+                g2.setColor(COLOR_GLASS_BG);
                 g2.fill(new RoundRectangle2D.Double(0, 0, getWidth(), getHeight(), 16, 16));
-                g2.setColor(COLOR_CARD_BORDER);
+                g2.setColor(COLOR_GLASS_BORDER);
                 g2.draw(new RoundRectangle2D.Double(0, 0, getWidth() - 1, getHeight() - 1, 16, 16));
                 g2.dispose();
                 super.paintComponent(g);
@@ -82,7 +83,7 @@ public class CourseForm extends JFrame {
         inputCard.add(txtCourseName, gbc);
 
         gbc.gridx = 1; gbc.gridy = 0; gbc.weightx = 0.3;
-        JLabel lblFee = new JLabel("Course Fee ($)");
+        JLabel lblFee = new JLabel("Course Fee");
         lblFee.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 12));
         lblFee.setForeground(COLOR_TEXT_MUTED);
         inputCard.add(lblFee, gbc);
@@ -92,7 +93,7 @@ public class CourseForm extends JFrame {
         inputCard.add(txtFee, gbc);
 
         gbc.gridx = 2; gbc.gridy = 1; gbc.weightx = 0.3;
-        JButton btnSave = createModernButton("+ Add Course", COLOR_ACCENT, new Color(180, 95, 4));
+        JButton btnSave = createModernButton("+ Add Course", COLOR_ACCENT, new Color(195, 115, 25));
         inputCard.add(btnSave, gbc);
 
         centerPanel.add(inputCard, BorderLayout.NORTH);
@@ -102,9 +103,9 @@ public class CourseForm extends JFrame {
             protected void paintComponent(Graphics g) {
                 Graphics2D g2 = (Graphics2D) g.create();
                 g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-                g2.setColor(COLOR_CARD_BG);
+                g2.setColor(COLOR_GLASS_BG);
                 g2.fill(new RoundRectangle2D.Double(0, 0, getWidth(), getHeight(), 16, 16));
-                g2.setColor(COLOR_CARD_BORDER);
+                g2.setColor(COLOR_GLASS_BORDER);
                 g2.draw(new RoundRectangle2D.Double(0, 0, getWidth() - 1, getHeight() - 1, 16, 16));
                 g2.dispose();
                 super.paintComponent(g);
@@ -117,15 +118,15 @@ public class CourseForm extends JFrame {
         table = new JTable(tableModel);
         table.setRowHeight(38);
         table.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 13));
-        table.setBackground(COLOR_CARD_BG);
-        table.setForeground(COLOR_TEXT_PRIMARY);
-        table.setGridColor(COLOR_CARD_BORDER);
+        table.setBackground(new Color(45, 32, 25));
+        table.setForeground(COLOR_TEXT_CREAM);
+        table.setGridColor(COLOR_GLASS_BORDER);
         table.setShowVerticalLines(false);
 
         table.getTableHeader().setFont(new Font(Font.SANS_SERIF, Font.BOLD, 12));
-        table.getTableHeader().setBackground(new Color(24, 18, 15));
+        table.getTableHeader().setBackground(new Color(28, 20, 15));
         table.getTableHeader().setForeground(COLOR_TEXT_MUTED);
-        table.getTableHeader().setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, COLOR_CARD_BORDER));
+        table.getTableHeader().setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, COLOR_GLASS_BORDER));
 
         DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
         centerRenderer.setHorizontalAlignment(JLabel.CENTER);
@@ -133,7 +134,7 @@ public class CourseForm extends JFrame {
 
         JScrollPane scroll = new JScrollPane(table);
         scroll.setBorder(BorderFactory.createEmptyBorder());
-        scroll.getViewport().setBackground(COLOR_CARD_BG);
+        scroll.getViewport().setBackground(new Color(45, 32, 25));
         tableCard.add(scroll, BorderLayout.CENTER);
 
         centerPanel.add(tableCard, BorderLayout.CENTER);
@@ -148,10 +149,10 @@ public class CourseForm extends JFrame {
         JTextField tf = new JTextField();
         tf.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 13));
         tf.setPreferredSize(new Dimension(140, 38));
-        tf.setBackground(new Color(28, 22, 18));
-        tf.setForeground(Color.WHITE);
+        tf.setBackground(new Color(55, 39, 31));
+        tf.setForeground(COLOR_TEXT_CREAM);
         tf.setCaretColor(COLOR_ACCENT);
-        tf.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(COLOR_CARD_BORDER, 1), new EmptyBorder(6, 12, 6, 12)));
+        tf.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(COLOR_GLASS_BORDER, 1), new EmptyBorder(6, 12, 6, 12)));
         return tf;
     }
 

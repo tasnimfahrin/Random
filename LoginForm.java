@@ -3,6 +3,7 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.geom.RoundRectangle2D;
+import java.io.File;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -13,11 +14,12 @@ public class LoginForm extends JFrame {
     private JPasswordField txtPassword;
     private JComboBox<String> cmbGender;
     private float cardOpacity = 0.0f;
+    private Image bgImage;
 
-    // Dark Palette
-    private final Color COLOR_CARD_BG = new Color(28, 22, 18);
-    private final Color COLOR_CARD_BORDER = new Color(55, 43, 37);
-    private final Color COLOR_ACCENT = new Color(217, 119, 6);
+    // Dark Coffee & Warm Cream Glass Palette
+    private final Color COLOR_ACCENT = new Color(224, 138, 38);
+    private final Color COLOR_TEXT_CREAM = new Color(248, 241, 233);
+    private final Color COLOR_TEXT_MUTED = new Color(201, 182, 166);
 
     public LoginForm() {
         setTitle("SMS Portal - Administrator Login");
@@ -27,80 +29,108 @@ public class LoginForm extends JFrame {
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         setResizable(true);
 
+        // Load background image
+        try {
+            File imgFile = new File("Images/login_bg.jpg");
+            if (!imgFile.exists()) imgFile = new File("Images/login_bg.png");
+            if (!imgFile.exists()) imgFile = new File("Images/bg.jpg");
+            
+            if (imgFile.exists()) {
+                bgImage = new ImageIcon(imgFile.getAbsolutePath()).getImage();
+            }
+        } catch (Exception ignored) {}
+
+        // Main Background Panel
         JPanel mainBackground = new JPanel() {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
                 Graphics2D g2d = (Graphics2D) g.create();
-                GradientPaint gp = new GradientPaint(0, 0, new Color(13, 10, 8), getWidth(), getHeight(), new Color(24, 18, 15));
-                g2d.setPaint(gp);
-                g2d.fillRect(0, 0, getWidth(), getHeight());
+                
+                if (bgImage != null) {
+                    g2d.drawImage(bgImage, 0, 0, getWidth(), getHeight(), this);
+                    g2d.setColor(new Color(18, 12, 9, 160));
+                    g2d.fillRect(0, 0, getWidth(), getHeight());
+                } else {
+                    GradientPaint gp = new GradientPaint(0, 0, new Color(20, 14, 11), getWidth(), getHeight(), new Color(38, 26, 20));
+                    g2d.setPaint(gp);
+                    g2d.fillRect(0, 0, getWidth(), getHeight());
+                }
                 g2d.dispose();
             }
         };
         mainBackground.setLayout(new GridBagLayout());
 
+        // Perfectly Symmetrical Frosted Glass Card
         JPanel card = new JPanel() {
             @Override
             protected void paintComponent(Graphics g) {
                 Graphics2D g2 = (Graphics2D) g.create();
                 g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+                g2.setRenderingHint(RenderingHints.KEY_STROKE_CONTROL, RenderingHints.VALUE_STROKE_PURE);
                 g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, cardOpacity));
 
-                // 3D Drop Shadow
-                g2.setColor(new Color(0, 0, 0, 120));
-                g2.fill(new RoundRectangle2D.Double(4, 6, getWidth() - 8, getHeight() - 8, 24, 24));
+                int w = getWidth();
+                int h = getHeight();
 
-                // Dark Coffee Body
-                g2.setColor(COLOR_CARD_BG);
-                g2.fill(new RoundRectangle2D.Double(0, 0, getWidth() - 6, getHeight() - 6, 24, 24));
-                g2.setColor(COLOR_CARD_BORDER);
-                g2.draw(new RoundRectangle2D.Double(0, 0, getWidth() - 7, getHeight() - 7, 24, 24));
+                // Centered Ambient Shadow
+                g2.setColor(new Color(0, 0, 0, 110));
+                g2.fillRoundRect(4, 6, w - 8, h - 8, 26, 26);
+
+                // Translucent Glass Body (Offset by 2px from all sides)
+                g2.setColor(new Color(35, 24, 18, 210));
+                g2.fillRoundRect(2, 2, w - 5, h - 5, 24, 24);
+
+                // Symmetrical Warm Cream Glass Border
+                g2.setColor(new Color(240, 225, 210, 65));
+                g2.setStroke(new BasicStroke(1.2f));
+                g2.drawRoundRect(2, 2, w - 5, h - 5, 24, 24);
+
                 g2.dispose();
                 super.paintComponent(g);
             }
         };
         card.setOpaque(false);
-        card.setPreferredSize(new Dimension(390, 560));
+        card.setPreferredSize(new Dimension(400, 570));
         card.setLayout(new BoxLayout(card, BoxLayout.Y_AXIS));
-        card.setBorder(new EmptyBorder(32, 34, 32, 34));
+        card.setBorder(new EmptyBorder(32, 36, 32, 36));
 
         JLabel lblIcon = new JLabel("☕", SwingConstants.CENTER);
-        lblIcon.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 40));
+        lblIcon.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 42));
         lblIcon.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         JLabel lblTitle = new JLabel("Welcome Back", SwingConstants.CENTER);
-        lblTitle.setFont(new Font("Segoe UI", Font.BOLD, 24));
-        lblTitle.setForeground(new Color(245, 240, 235));
+        lblTitle.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 24));
+        lblTitle.setForeground(COLOR_TEXT_CREAM);
         lblTitle.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         JLabel lblSub = new JLabel("Administrator Control Portal", SwingConstants.CENTER);
-        lblSub.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-        lblSub.setForeground(new Color(168, 153, 142));
+        lblSub.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 12));
+        lblSub.setForeground(COLOR_TEXT_MUTED);
         lblSub.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         JLabel lblUser = new JLabel("Username");
-        lblUser.setFont(new Font("Segoe UI Semibold", Font.BOLD, 12));
-        lblUser.setForeground(new Color(210, 195, 185));
-        txtUsername = createDarkTextField();
+        lblUser.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 12));
+        lblUser.setForeground(COLOR_TEXT_CREAM);
+        txtUsername = createGlassTextField();
 
         JLabel lblPass = new JLabel("Password");
-        lblPass.setFont(new Font("Segoe UI Semibold", Font.BOLD, 12));
-        lblPass.setForeground(new Color(210, 195, 185));
-        txtPassword = createDarkPasswordField();
+        lblPass.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 12));
+        lblPass.setForeground(COLOR_TEXT_CREAM);
+        txtPassword = createGlassPasswordField();
 
         JLabel lblGen = new JLabel("Gender");
-        lblGen.setFont(new Font("Segoe UI Semibold", Font.BOLD, 12));
-        lblGen.setForeground(new Color(210, 195, 185));
-        
+        lblGen.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 12));
+        lblGen.setForeground(COLOR_TEXT_CREAM);
+
         cmbGender = new JComboBox<>(new String[]{"Select", "Male", "Female"});
-        cmbGender.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-        cmbGender.setBackground(new Color(38, 30, 25));
-        cmbGender.setForeground(Color.WHITE);
+        cmbGender.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 13));
+        cmbGender.setBackground(new Color(55, 39, 31));
+        cmbGender.setForeground(COLOR_TEXT_CREAM);
         cmbGender.setFocusable(false);
 
-        JButton btnLogin = createModernButton("Sign In", COLOR_ACCENT, new Color(180, 95, 4));
-        JButton btnRegister = createModernButton("Create New Account", new Color(16, 185, 129), new Color(5, 150, 105));
+        JButton btnLogin = createGlassButton("Sign In", COLOR_ACCENT, new Color(195, 115, 25));
+        JButton btnRegister = createGlassButton("Create New Account", new Color(16, 185, 129), new Color(5, 150, 105));
 
         card.add(lblIcon);
         card.add(Box.createRigidArea(new Dimension(0, 4)));
@@ -168,7 +198,7 @@ public class LoginForm extends JFrame {
         fadeTimer.start();
     }
 
-    private JButton createModernButton(String text, Color baseColor, Color hoverColor) {
+    private JButton createGlassButton(String text, Color baseColor, Color hoverColor) {
         JButton btn = new JButton(text) {
             @Override
             protected void paintComponent(Graphics g) {
@@ -181,7 +211,7 @@ public class LoginForm extends JFrame {
             }
         };
         btn.setMaximumSize(new Dimension(330, 38));
-        btn.setFont(new Font("Segoe UI Semibold", Font.BOLD, 13));
+        btn.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 13));
         btn.setForeground(Color.WHITE);
         btn.setContentAreaFilled(false);
         btn.setBorderPainted(false);
@@ -191,27 +221,27 @@ public class LoginForm extends JFrame {
         return btn;
     }
 
-    private JTextField createDarkTextField() {
+    private JTextField createGlassTextField() {
         JTextField tf = new JTextField();
-        tf.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-        tf.setBackground(new Color(38, 30, 25));
-        tf.setForeground(Color.WHITE);
+        tf.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 13));
+        tf.setBackground(new Color(55, 39, 31));
+        tf.setForeground(COLOR_TEXT_CREAM);
         tf.setCaretColor(COLOR_ACCENT);
         tf.setBorder(BorderFactory.createCompoundBorder(
-                BorderFactory.createLineBorder(COLOR_CARD_BORDER, 1),
+                BorderFactory.createLineBorder(new Color(240, 225, 210, 40), 1),
                 BorderFactory.createEmptyBorder(6, 10, 6, 10)
         ));
         return tf;
     }
 
-    private JPasswordField createDarkPasswordField() {
+    private JPasswordField createGlassPasswordField() {
         JPasswordField pf = new JPasswordField();
-        pf.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-        pf.setBackground(new Color(38, 30, 25));
-        pf.setForeground(Color.WHITE);
+        pf.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 13));
+        pf.setBackground(new Color(55, 39, 31));
+        pf.setForeground(COLOR_TEXT_CREAM);
         pf.setCaretColor(COLOR_ACCENT);
         pf.setBorder(BorderFactory.createCompoundBorder(
-                BorderFactory.createLineBorder(COLOR_CARD_BORDER, 1),
+                BorderFactory.createLineBorder(new Color(240, 225, 210, 40), 1),
                 BorderFactory.createEmptyBorder(6, 10, 6, 10)
         ));
         return pf;
