@@ -88,8 +88,8 @@ public class StudentReportForm extends JFrame {
 
         lblNameVal = createValueLabel("-");
         lblGenderVal = createValueLabel("-");
-        lblCoursesVal = createValueLabel("0 Course(s)");
-        lblTotalPaidVal = createValueLabel("$0.00");
+        lblCoursesVal = createValueLabel("None");
+        lblTotalPaidVal = createValueLabel("0.00");
         lblTotalPaidVal.setForeground(new Color(16, 185, 129));
 
         card.add(createTitleLabel("Student Full Name:"));
@@ -156,11 +156,11 @@ public class StudentReportForm extends JFrame {
             while (rs2.next()) enrolled.add(rs2.getString("course_name"));
             lblCoursesVal.setText(enrolled.isEmpty() ? "None" : String.join(", ", enrolled));
 
-            // Total fee paid
+            // Total fee paid (No $ sign)
             ResultSet rs3 = st.executeQuery("SELECT SUM(amount_paid) FROM payments WHERE student_id = " + sId);
             if (rs3.next()) {
                 double total = rs3.getDouble(1);
-                lblTotalPaidVal.setText("$" + String.format("%.2f", total));
+                lblTotalPaidVal.setText(String.format("%.2f", total));
             }
         } catch (Exception ex) { ex.printStackTrace(); }
     }

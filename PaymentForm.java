@@ -93,9 +93,9 @@ public class PaymentForm extends JFrame {
         cbStudents.setPreferredSize(new Dimension(160, 38));
         inputCard.add(cbStudents, gbc);
 
-        // Amount Paid
+        // Amount
         gbc.gridx = 1; gbc.gridy = 0; gbc.weightx = 0.25;
-        JLabel lblAmount = new JLabel("Amount ($)");
+        JLabel lblAmount = new JLabel("Amount");
         lblAmount.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 12));
         lblAmount.setForeground(COLOR_TEXT_MUTED);
         inputCard.add(lblAmount, gbc);
@@ -161,7 +161,7 @@ public class PaymentForm extends JFrame {
         lblTableHeading.setForeground(COLOR_TEXT_PRIMARY);
         tableCard.add(lblTableHeading, BorderLayout.NORTH);
 
-        tableModel = new DefaultTableModel(new String[]{"TRANSACTION ID", "STUDENT NAME", "PAID ($)", "MODE", "PAY DATE"}, 0);
+        tableModel = new DefaultTableModel(new String[]{"TRANSACTION ID", "STUDENT NAME", "PAID", "MODE", "PAY DATE"}, 0);
         table = new JTable(tableModel);
         table.setRowHeight(38);
         table.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 13));
