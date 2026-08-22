@@ -113,7 +113,7 @@ public class PaymentForm extends JFrame {
         inputCard.add(lblMethod, gbc);
 
         gbc.gridx = 2; gbc.gridy = 1;
-        cbMethod = new JComboBox<>(new String[]{"Cash", "bKash", "Card", "Bank"});
+        cbMethod = new JComboBox<>(new String[]{"Cash", "Mobile Banking", "Card", "Bank"});
         cbMethod.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 13));
         cbMethod.setBackground(new Color(55, 39, 31));
         cbMethod.setForeground(COLOR_TEXT_CREAM);
